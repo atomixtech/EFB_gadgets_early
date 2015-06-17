@@ -1,0 +1,71 @@
+EFB Hardware Parts [version 0.1]
+================================
+
+m - master controller
+s - slave modules 
+
+
+Logical Data Channel Types
+==========================
+
+- 8bit data channel (A channel)
+- 1bit data channel (B channel)
+- Character channel (C channel)
+
+
+Intercommunication Messages
+===========================
+
+- Device Detecting Messages
+	m->s	request to get device info
+		{DD}
+	m<-s	response
+		{DD#<device_name>#<device_version>#<device_uid>}
+
+	device_name: the specific name of the device
+	device_version: the version of the specified device
+	device_uid: a 6-byte unique ID of the device
+
+- 8bit Data Messages
+	m->s	write request
+		{!A#<channel>#<value>}
+	m->s	read request
+		{?A#<channel>}
+	m<-s	read response / data changed notification
+		{=A#<channel>#<value>}
+
+	channel: the ID number of the specified 8-bit data channel
+	value: 0 ~ 255
+
+- 1bit Data Messages
+	m->s	write request
+		{!B#<channel>#<value>}
+	m->s	read request
+		{?B#<channel>}
+	m<-s	read response / data changed notification
+		{=B#<channel>#<value>}
+
+	channel: the ID number of the specified 1-bit data channel
+	value: 0 or 1
+
+- Character Messages
+	m->s	write request
+		{!C#<channel>#<value>}
+	m->s	read request
+		{?C#<channel>}
+	m<-s	read response / data changed notification
+		{=C#<channel>#<value>}
+
+	channel: the ID number of the specified character channel
+	value: a string of utf-8 characters
+
+- Error Messages
+	m<-s	error response
+		{ER#<error_number>}
+
+	error_number: an error number
+			0 = Unrecognized Request
+			1 = Others
+
+
+ 
