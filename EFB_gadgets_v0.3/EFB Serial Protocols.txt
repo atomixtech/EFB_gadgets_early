@@ -1,5 +1,5 @@
-EFB Hardware Parts
-==================
+EFB Hardware Parts [version 0.3]
+================================
 
 m - master controller
 s - slave modules 
